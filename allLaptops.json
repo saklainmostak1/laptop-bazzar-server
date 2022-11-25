@@ -1,0 +1,111 @@
+[
+    {
+        " id": "01",
+        "description": "From here you can buy various type of second hand hp laptop. These lap…",
+        "img": "https://o.aolcdn.com/images/dar/5845cadfecd996e0372f/cf24851a680e77822…",
+        "name": "Hp Laptop",
+        "data":[
+            {
+    
+                "category_id": "01",
+                "seller_name": "Hasibul hasan",
+                "location": "Dhanmundi 32, Dhaka",
+                  "product_name": "HP 019c Laptop",
+                  "posted_date": "2022-11-24",
+                  "img": "https://store.hp.com/app/assets/images/uploads/prod/laptop-vs-desktop-pc-11555346980300.jpg?impolicy=prdimg&imdensity=1&imwidth=1000",
+                
+                  "original_price": "60000",
+                  "resale_price": "25000",
+                  "uses_year": "2 Year",
+                  "details": "Condition Are Good. Buy before check"
+              },
+              {
+               
+                "category_id": "01",
+                "seller_name": "Saklain Mostak",
+                "location": "Mohakhali, Dhaka",
+                  "product_name": "HP 10fch Laptop",
+                  "posted_date": "2022-11-20",
+                  "img": "https://clarioncomms.com/wp-content/uploads/2020/04/hp-840-g3-front.jpg",
+                
+                  "original_price": "90000",
+                  "resale_price": "50000",
+                  "uses_year": "6 months",
+                "details": "Condition Are Good. Buy before check"
+              }
+        ]
+
+    },
+    {
+        "id": "02",
+        "description": "From here you can buy various type of second hand dell laptop. These l…",
+        "img": "https://uploads-ssl.webflow.com/576fd5a8f192527e50a4b95c/60ce342f681c8…",
+        "name": "Dell Laptop",
+        "data": [
+            {
+    
+                "category_id": "02",
+                "seller_name": "Nayan",
+                "location": "Bosila, Dhaka",
+                  "product_name": "Dell 10g9 Laptop",
+                  "posted_date": "2022-11-10",
+                  "img": "https://uploads-ssl.webflow.com/576fd5a8f192527e50a4b95c/60ce342f681c8939f6eb128a_Dell%20XPS%2015.jpg",
+                
+                  "original_price": "52000",
+                  "resale_price": "30000",
+                  "uses_year": "1 Year",
+                "details": "Condition Are Good. Buy before check"
+              },
+              {
+             
+                "category_id": "02",
+                "seller_name": "Hasan ahmmed",
+                "location": "Mohammodpur, Dhaka",
+                  "product_name": "Dell 10f Laptop",
+                  "posted_date": "2022-08-24",
+                  "img": "https://badrlaptop.com/wp-content/uploads/2022/08/laptop-DELL-Latitude-7280-.png",
+                
+                  "original_price": "45000",
+                  "resale_price": "20000",
+                  "uses_year": "3 year",
+                "details": "Condition Are Good. Buy before check"
+              }
+        ]
+    },
+    {
+        "id": "03",
+        "description": "From here you can buy various type of second hand lenovo laptop. These…",
+        "img": "https://images-eu.ssl-images-amazon.com/images/I/51UKrd-uHzL._AC_UL600…",
+        "name": "Lenovo Laptop",
+        "data": [
+            {
+  
+                "category_id": "03",
+                "seller_name": "Mahmudul Hasan",
+                "location": "Ashad Gate, Dhaka",
+                  "product_name": "Lenovo 10f9 Laptop",
+                  "posted_date": "2022-06-21",
+                  "img": "https://s.yimg.com/uu/api/res/1.2/rEzHgik1eHTM9u6HuIWxBg--~B/aD00MDA7dz02MDA7YXBwaWQ9eXRhY2h5b24-/https://www.blogcdn.com/www.engadget.com/media/2011/02/thinkpadx120e38-1297098205.jpg",
+                
+                  "original_price": "66000",
+                  "resale_price": "40000",
+                  "uses_year": "5 year",
+                "details": "Condition Are Good. Buy before check"
+              },
+              {
+               
+                "category_id": "03",
+                "seller_name": "Shanto",
+                "location": "Dhanmundi 32, Dhaka",
+                  "product_name": "Lenovo 10p09 Laptop",
+                  "posted_date": "2022-07-14",
+                  "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpLLF3CdY18IydBe1opAzzXmtMnQVqckCwzQ&usqp=CAU",
+                
+                  "original_price": "34000",
+                  "resale_price": "20000",
+                  "uses_year": "2 year",
+                "details": "Condition Are Good. Buy before check"
+              }
+        ]
+    }
+]
