@@ -133,6 +133,14 @@ async function run() {
             const result = await usersCollection.insertOne(user);
             res.send(result)
         })
+        app.put('/users/seller/:id',verifyJWT, async(req, res)=>{
+            const decodedEmail = req.decoded.email
+            const query = {email: decodedEmail}
+            const user = await usersCollection.findOne(query)
+            if(user?.role !== 'seller'){
+                return res.status(403).send({message: 'forbiden access'})
+            }
+        })
 
         app.put('/users/admin/:id', verifyJWT, async (req, res) => {
 
@@ -152,6 +160,19 @@ async function run() {
                 }
             }
             const result = await usersCollection.updateOne(filter, updatedDoc, options)
+            res.send(result)
+        })
+
+        app.patch('/users/:id', async(req, res) =>{
+            const id = req.params.id
+            const status = req.body.status
+            const query = {_id: ObjectId(id)}
+            const updatedDoc = {
+                $set: {
+                    status: status,
+                }
+            }
+            const result = await usersCollection.updateOne(query, updatedDoc)
             res.send(result)
         })
 
