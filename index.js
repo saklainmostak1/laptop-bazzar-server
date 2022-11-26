@@ -128,19 +128,29 @@ async function run() {
             res.send({isAdmin: user?.role === 'admin' })
         })
 
+        app.get('/users/seller/:email', async(req, res)=>{
+            const email = req.params.email
+            // const id = req.params.id
+            const query = { email }
+            const user = await usersCollection.findOne(query)
+            res.send({isSeller: user?.role === 'Seller' })
+        })
+
         app.post('/users', async (req, res) => {
             const user = req.body
             const result = await usersCollection.insertOne(user);
             res.send(result)
         })
-        app.put('/users/seller/:id',verifyJWT, async(req, res)=>{
-            const decodedEmail = req.decoded.email
-            const query = {email: decodedEmail}
-            const user = await usersCollection.findOne(query)
-            if(user?.role !== 'seller'){
-                return res.status(403).send({message: 'forbiden access'})
-            }
-        })
+
+
+        // app.put('/users/seller/:id',verifyJWT, async(req, res)=>{
+        //     const decodedEmail = req.decoded.email
+        //     const query = {email: decodedEmail}
+        //     const user = await usersCollection.findOne(query)
+        //     if(user?.role !== 'seller'){
+        //         return res.status(403).send({message: 'forbiden access'})
+        //     }
+        // })
 
         app.put('/users/admin/:id', verifyJWT, async (req, res) => {
 
