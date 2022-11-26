@@ -16,7 +16,7 @@ console.log(uri);
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
  function verifyJWT(req, res, next){
-    // console.log('token', req.headers.authorization);
+  
     const authHeader =  req.headers.authorization
     if(!authHeader){
         return res.status(401).send('unauthorized access')
@@ -115,9 +115,29 @@ async function run() {
           res.send(result)
        })
 
+       app.get('/users', async(req, res) =>{
+        const query = {}
+        const allUsers = await usersCollection.find(query).toArray()
+        res.send(allUsers)
+       })
+
        app.post('/users', async(req, res) =>{
             const user = req.body
             const result = await usersCollection.insertOne(user);
+            res.send(result)
+       })
+
+       app.put('/users/admin/:id', async(req, res) =>{
+            const id = req.params.id
+            const filter = {_id: ObjectId(id)}
+            const options = { upsert: true }
+            const updatedDoc = {
+                $set: {
+                   role: 'admin' 
+
+                }
+            }
+            const result = await usersCollection.updateOne(filter, updatedDoc, options)
             res.send(result)
        })
         
