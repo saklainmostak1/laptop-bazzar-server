@@ -102,15 +102,6 @@ async function run() {
 
         app.post('/bookings', async (req, res) => {
             const booking = req.body
-            // const query = {
-            //     productName: booking.products
-            // }
-            // const booked = await bookingsCollection.find(query).toArray()
-            // if(booked){
-            //     const messege = `${product_name} is already booked`
-            //     return res.send({acknowledged: false, messege})
-            // }
-
             const result = await bookingsCollection.insertOne(booking)
             res.send(result)
         })
@@ -148,16 +139,6 @@ async function run() {
             const result = await usersCollection.insertOne(user);
             res.send(result)
         })
-
-
-        // app.put('/users/seller/:id',verifyJWT, async(req, res)=>{
-        //     const decodedEmail = req.decoded.email
-        //     const query = {email: decodedEmail}
-        //     const user = await usersCollection.findOne(query)
-        //     if(user?.role !== 'seller'){
-        //         return res.status(403).send({message: 'forbiden access'})
-        //     }
-        // })
 
         app.put('/users/admin/:id', verifyJWT, async (req, res) => {
 
