@@ -24,6 +24,8 @@ async function run() {
         const laptopCollection = client.db('useProduct').collection('laptops')
 
         const bookingsCollection = client.db('useProduct').collection('bookings')
+
+        const usersCollection = client.db('useProduct').collection('users')
        
 
 
@@ -57,15 +59,32 @@ async function run() {
        })
 
        app.get('/bookings', async(req, res) => {
-        const query = {}
+        const email = req.query.email
+        const query = {email: email}
         const result = await bookingsCollection.find(query).toArray()
         res.send(result)
        })
 
+
        app.post('/bookings', async(req, res) =>{
           const booking = req.body
+        // const query = {
+        //     productName: booking.products
+        // }
+        // const booked = await bookingsCollection.find(query).toArray()
+        // if(booked){
+        //     const messege = `${product_name} is already booked`
+        //     return res.send({acknowledged: false, messege})
+        // }
+
           const result = await bookingsCollection.insertOne(booking)
           res.send(result)
+       })
+
+       app.post('/users', async(req, res) =>{
+            const user = req.body
+            const result = await usersCollection.insertOne(user);
+            res.send(result)
        })
         
 
