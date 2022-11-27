@@ -3,6 +3,8 @@ const app = express()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
+
 const cors = require('cors');
 const port = process.env.PORT || 5000
 
@@ -116,13 +118,17 @@ async function run() {
             res.status(403).send({ accessToken: '' })
         })
 
+        app.post('/create-payment-intent', async(req, res) =>{
+            
+        })
+
 
         app.post('/bookings', async (req, res) => {
             const booking = req.body
             const result = await bookingsCollection.insertOne(booking)
             res.send(result)
         })
-//sfddeg
+
         app.get('/users',   async (req, res) => {
             const query = {}
             const allUsers = await usersCollection.find(query).toArray()
