@@ -3,7 +3,7 @@ const app = express()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-const stripe = require("stripe")(process.env.STRIPE_SECRET)
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
 
 const cors = require('cors');
 const port = process.env.PORT || 5000
@@ -42,11 +42,13 @@ async function run() {
 
         const laptopCollection = client.db('useProduct').collection('laptops')
 
-        const bookingsCollection = client.db('useProduct').collection('bookings')
-
+        const orderCollection = client.db('useProduct').collection('bookings')
+//  bookingsCollection
         const usersCollection = client.db('useProduct').collection('users')
 
         const addProductCollection = client.db('useProduct').collection('sellerProduct')
+
+        const paymentsCollection = client.db('useProduct').collection('payments')
          
         const verifySeller = async(req, res, next) =>{
             const decodedEmail = req.decoded.email
@@ -96,13 +98,13 @@ async function run() {
             }
             const query = { email: email }
 
-            const result = await bookingsCollection.find(query).toArray()
+            const result = await orderCollection.find(query).toArray()
             res.send(result)
         })
         app.get('/bookings/:id', async(req, res) =>{
             const id = req.params.id
             const query = {_id: ObjectId(id)}
-            const result = await bookingsCollection.findOne(query)
+            const result = await orderCollection.findOne(query)
             res.send(result)
         } )
 
@@ -118,18 +120,42 @@ async function run() {
             res.status(403).send({ accessToken: '' })
         })
 
-        app.post('/create-payment-intent', async(req, res) =>{
+        app.post('/create-payment-intent', async(req, res)=>{
+            const booking = req.body
+            const prices = booking.prices
+            const amount = prices * 100
 
+            const paymentIntent = await stripe.paymentIntents.create({
+                currency: 'usd',
+                amount: amount,
+                "payment_method_types": [
+                    "card"
+                  ],
 
-            
-
-
+            })
+            res.send({
+                clientSecret: paymentIntent.client_secret,
+              });
         })
 
+        app.post('/payments', async(req, res) =>{
+            const payment = req.body
+            const result = await paymentsCollection.insertOne(payment)
+            const id = payment.OrderId
+            const query = {_id: ObjectId(id) }
+            const updatedDoc = {
+                $set: {
+                    paid: true,
+                    transactionId: payment.transactionId 
+                }
+            }
+            const updated = await orderCollection.updateOne(query, updatedDoc)
+            res.send(result)
+        })
 
         app.post('/bookings', async (req, res) => {
             const booking = req.body
-            const result = await bookingsCollection.insertOne(booking)
+            const result = await orderCollection.insertOne(booking)
             res.send(result)
         })
 
@@ -205,7 +231,8 @@ async function run() {
             const result = await usersCollection.updateOne(filter, updatedDoc, options)
             res.send(result)
         })
-//hsdha
+
+        
         app.patch('/users/:id', async(req, res) =>{
             const id = req.params.id
             const status = req.body.status
