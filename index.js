@@ -44,6 +44,17 @@ async function run() {
 
         const usersCollection = client.db('useProduct').collection('users')
 
+        const addProductCollection = client.db('useProduct').collection('sellerProduct')
+         
+        const verifySeller = async(req, res, next) =>{
+            const decodedEmail = req.decoded.email
+            const query = {email: decodedEmail}
+            const user = await usersCollection.findOne(query)
+            if(user?.role !== 'Seller'){
+                return res.status(403).send({message: 'forbiden access'})
+            }
+            next()
+        }
 
 
         app.get('/categoryNames', async (req, res) => {
@@ -106,7 +117,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/users', async (req, res) => {
+        app.get('/users',   async (req, res) => {
             const query = {}
             const allUsers = await usersCollection.find(query).toArray()
             res.send(allUsers)
@@ -120,6 +131,7 @@ async function run() {
         })
 
         app.get('/users/seller/:email', async(req, res)=>{
+            
             const email = req.params.email
             // const id = req.params.id
             const query = { email }
@@ -134,9 +146,26 @@ async function run() {
             res.send({isBuyers: user?.role === 'Buyers' })
         })
 
+        app.get('/sellerProduct', async(req, res) =>{
+
+            let query = {}
+            if(req.query.email){
+                query = {
+                    email: req.query.email
+                }
+            }
+            const products = await addProductCollection.find(query).toArray()
+            res.send(products)
+        })
+
         app.post('/users', async (req, res) => {
             const user = req.body
             const result = await usersCollection.insertOne(user);
+            res.send(result)
+        })
+        app.post('/sellerProduct',verifyJWT, async (req, res) => {
+            const addProduct = req.body
+            const result = await addProductCollection.insertOne(addProduct);
             res.send(result)
         })
 
@@ -160,7 +189,7 @@ async function run() {
             const result = await usersCollection.updateOne(filter, updatedDoc, options)
             res.send(result)
         })
-
+//hsdha
         app.patch('/users/:id', async(req, res) =>{
             const id = req.params.id
             const status = req.body.status
@@ -178,6 +207,12 @@ async function run() {
             const id = req.params.id
             const query = {_id: ObjectId(id)}
             const result = await usersCollection.deleteOne(query)
+            res.send(result)
+        })
+        app.delete('/sellerProduct/:id',verifyJWT, async(req, res) =>{
+            const id = req.params.id
+            const filter = {_id: ObjectId(id) }
+            const result = await addProductCollection.deleteOne(filter)
             res.send(result)
         })
 
