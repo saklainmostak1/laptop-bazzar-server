@@ -273,6 +273,18 @@ async function run() {
             const result = await addProductCollection.deleteOne(filter)
             res.send(result)
         })
+        app.delete('/reports/:id', async(req, res)=> {
+            const id = req.params.id
+            const filter = {_id: ObjectId(id)}
+            const result = await adminReportCollection.deleteOne(filter)
+            res.send(result)
+        })
+        app.delete('/laptops/:id', async(req, res)=> {
+            const id = req.params.id
+            const filter = {_id: ObjectId(id)}
+            const result = await laptopCollection.deleteOne(filter)
+            res.send(result)
+        })
 
 
 
