@@ -49,6 +49,8 @@ async function run() {
         const addProductCollection = client.db('useProduct').collection('sellerProduct')
 
         const paymentsCollection = client.db('useProduct').collection('payments')
+
+        const adminReportCollection = client.db('useProduct').collection('reports')
          
         const verifySeller = async(req, res, next) =>{
             const decodedEmail = req.decoded.email
@@ -164,7 +166,7 @@ async function run() {
             const allUsers = await usersCollection.find(query).toArray()
             res.send(allUsers)
         })
-        app.get('/users/admin/:email', async(req, res) => {
+        app.get('/users/admin/:email',  async(req, res) => {
             const email = req.params.email
             // const id = req.params.id
             const query = { email }
@@ -199,12 +201,25 @@ async function run() {
             const products = await addProductCollection.find(query).toArray()
             res.send(products)
         })
+        app.get('/reports', async(req, res) =>{
+            const query = {}
+            const result = await adminReportCollection.find(query).toArray()
+            res.send(result)
+        })
 
         app.post('/users', async (req, res) => {
             const user = req.body
             const result = await usersCollection.insertOne(user);
             res.send(result)
         })
+
+        app.post('/reports', async(req, res) =>{
+            const report = req.body
+            const result = await adminReportCollection.insertOne(report)
+            res.send(result)
+        })
+
+
         app.post('/sellerProduct',verifyJWT, async (req, res) => {
             const addProduct = req.body
             const result = await addProductCollection.insertOne(addProduct);
